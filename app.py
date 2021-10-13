@@ -38,7 +38,7 @@ st.sidebar.write('• Mark Yonan')
 
 
 if rad == 'Home':
-    st.title('Dashboard Elektrische Voertuigen NL')
+    st.title('Dashboard Elektrische Voertuigen Nederland')
     img = Image.open("foto.png")
     st.image(img, width=800)
     '....'
