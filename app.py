@@ -53,7 +53,7 @@ gpd_provinces = gpd.read_file('provinces.geojson')
 df_map = pd.read_csv('map_data_cleaned.csv')
 df_dr = df_map[df_map['Province'] == 'Drenthe']
 
-map_dr = folium.Map(location=[52.9476012, 6.6230586], zoom_start=9.4)
+map_dr = folium.Map(location=[52.9476012, 6.6230586], zoom_start=9.4, tiles='cartodbpositron')
 
 for row in df_dr.iterrows():
     row_values = row[1] 
@@ -62,8 +62,6 @@ for row in df_dr.iterrows():
     marker = folium.Marker(location = location, popup = popup, icon=folium.Icon(icon='flash', color='green'))
     marker.add_to(map_dr)
     
-folium.TileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', 
-                 attr='Mapbox attribution', name='Terrain').add_to(map_dr)
     
 folium.GeoJson(gpd_provinces.iloc[0]['geometry']).add_to(map_dr)
 
@@ -83,7 +81,7 @@ st.subheader('Heatmap Laadpalen Drenthe')
 
 
 #Code heatmap Drenthe
-map_heat = folium.Map(location=[52.9476012, 6.6230586], zoom_start=9.4)
+map_heat = folium.Map(location=[52.9476012, 6.6230586], zoom_start=9.4, tiles='cartodbpositron')
 
 map_heat.add_child(plugins.HeatMap(df_dr[['LAT', 'LNG']].values, radius=19))
 folium.Marker(location=[52.993668, 6.548259],popup='<strong>'+'Assen'+'</strong>').add_to(map_heat)
@@ -91,9 +89,6 @@ folium.Marker(location=[52.7558037, 6.9095851],popup='<strong>'+'Emmen'+'</stron
 folium.Marker(location=[52.7286158, 6.4701002],popup='<strong>'+'Hoogeveen'+'</strong>').add_to(map_heat)
 folium.Marker(location=[53.1383574, 6.4123693],popup='<strong>'+'Roden'+'</strong>').add_to(map_heat)
 folium.Marker(location=[53.0841274, 6.6648434],popup='<strong>'+'Zuidlaren'+'</strong>').add_to(map_heat)
-
-folium.TileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', 
-                 attr='Mapbox attribution', name='Terrain').add_to(map_heat)
 
 folium.GeoJson(gpd_provinces.iloc[0]['geometry']).add_to(map_heat)
 
@@ -131,7 +126,7 @@ def prijs(totaal):
     return popup
 
 
-map_tr = folium.Map(location=[52.9476012, 6.6230586], zoom_start=9.4)
+map_tr = folium.Map(location=[52.9476012, 6.6230586], zoom_start=9.4, tiles='cartodbpositron')
 
 for row in df_dr.iterrows():
     row_values = row[1] 
@@ -139,10 +134,7 @@ for row in df_dr.iterrows():
     popup = (prijs(row_values['Usage Cost']))
     marker = folium.Marker(location = location, popup = popup, icon=folium.Icon(icon='flash', 
                                                                                 color=bekend(row_values['Usage Cost'])))
-    marker.add_to(map_tr)
-    
-folium.TileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', 
-                 attr='Mapbox attribution', name='Terrain').add_to(map_tr)
+    marker.add_to(map_tr)    
     
 folium.GeoJson(gpd_provinces.iloc[0]['geometry']).add_to(map_tr)
 
